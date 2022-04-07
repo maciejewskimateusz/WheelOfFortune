@@ -13,7 +13,7 @@ class PlayerTest {
     @Test
     void shouldThrowIllegalArgumentExceptionIfNameIsNull() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(null));
 
     }
 
