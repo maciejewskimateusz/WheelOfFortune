@@ -1,14 +1,19 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PlayerTest {
+
+    @Test
+    void shouldThrowIllegalArgumentExceptionIfNameIsEmpty() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(" "));
+
+    }
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfNameIsNull() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(" "));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(""));
 
     }
 
