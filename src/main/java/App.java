@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Player> playersList = new ArrayList<>();
+        List<Player> playersList = new ArrayList<>();
 
         System.out.println("Witaj w Kole Fortuny!");
         System.out.println("Proszę podac ilość graczy");
