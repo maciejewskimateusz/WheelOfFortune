@@ -11,6 +11,7 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Player> playersList = new ArrayList<>();
+        PasswordManager passwordManager = new PasswordManager();
 
         System.out.println("Witaj w Kole Fortuny!");
         System.out.println("Proszę podac ilość graczy");
@@ -32,7 +33,8 @@ public class App {
         scanner.close();
         for (int i = 0; i < ROUNDS; i++) {
             System.out.println("Rozpoczęła się runda " + "<" + (i + 1) + ">");
-            playersList.forEach((player) -> System.out.println("Tura gracza: " + player.toString()));
+            System.out.println("Losowe haslo: " + passwordManager.getRandomPassword());
+            playersList.forEach((player) -> System.out.println("Tura gracza: " + player));
         }
     }
 }
