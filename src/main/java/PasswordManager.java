@@ -12,6 +12,8 @@ public class PasswordManager {
         passwords.add("Darowanemu koniowi w zęby się nie zagląda");
         passwords.add("Diabeł tkwi w szczegółach");
         passwords.add("Elektryka prąd nie tyka");
+        passwords.add("Dodatkowe hasło");
+        passwords.add("Ekstra hasło");
 
         for (int i = 0; i < passwords.size(); i++) {
             passwordsMap.put(passwords.get(i), false);
