@@ -33,8 +33,8 @@ public class App {
 
         for (int i = 0; i < ROUNDS; i++) {
             System.out.println("Rozpoczęła się runda " + "<" + (i + 1) + ">");
+            String randomPassword = passwordManager.getRandomPassword().toLowerCase();
             for (Player player : playersList) {
-                String randomPassword = passwordManager.getRandomPassword().toLowerCase();
                 System.out.println("Tura gracza: " + player);
                 System.out.println("Proszę podać literę lub hasło");
                 String playerAnswer = scanner.nextLine().toLowerCase();
