@@ -4,6 +4,7 @@ public class PasswordManager {
     private List<String> passwords = new ArrayList<>();
     private Random random = new Random();
     private Map<String, Boolean> passwordsMap = new HashMap<>();
+    private String currentPassword;
 
     PasswordManager() {
         passwords.add("Apetyt rośnie w miarę jedzenia");
@@ -20,17 +21,32 @@ public class PasswordManager {
         }
     }
 
+    public List<String> getPasswords() {
+        return passwords;
+    }
+
+     void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public void setPasswords(List<String> passwords) {
+        this.passwords = passwords;
+        passwordsMap.clear();
+        for (int i = 0; i < passwords.size(); i++) {
+            passwordsMap.put(passwords.get(i), false);
+        }
+    }
+
     String getRandomPassword() {
         int randomPasswordIndex = random.nextInt(passwords.size());
-        String password;
         String randomPassword = passwords.get(randomPasswordIndex);
 
         while (areUnusedPasswords()) {
             //jezeli flaga false zwroc haslo
-            if (!passwordsMap.get(randomPassword)){
-                password = randomPassword;
+            if (!passwordsMap.get(randomPassword)) {
+                currentPassword = randomPassword;
                 passwordsMap.put(randomPassword, true);
-                return password;
+                return currentPassword;
             } else {
                 // jezeli wylosowane haslo ma juz flage true, losuj nowe haslo
                 randomPassword = passwords.get(random.nextInt(passwords.size()));
@@ -47,15 +63,19 @@ public class PasswordManager {
         return false;
     }
 
-    public void setPasswords(List<String> passwords) {
-        this.passwords = passwords;
-        passwordsMap.clear();
-        for (int i = 0; i < passwords.size(); i++) {
-            passwordsMap.put(passwords.get(i), false);
+    public int guessLetter(char letter) {
+        char[] guessWordArrayChar = currentPassword.toLowerCase().toCharArray();
+        int counter = 0;
+
+        for (int i = 0; i < currentPassword.length(); i++) {
+            if (guessWordArrayChar[i] == letter)
+                counter++;
         }
+        return counter;
     }
 
-    public List<String> getPasswords() {
-        return passwords;
+    public boolean guessPassword(String password){
+        return currentPassword.equalsIgnoreCase(password);
     }
+
 }

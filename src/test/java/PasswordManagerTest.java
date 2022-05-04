@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -6,10 +8,11 @@ import java.util.List;
 
 class PasswordManagerTest {
 
+    PasswordManager passwordManager = new PasswordManager();
+
     @Test
     void shouldGeneratedPasswordBeEqualPasswordFromList() {
 
-        PasswordManager passwordManager = new PasswordManager();
         String firstPassword = "Apetyt rośnie w miarę jedzenia";
         List<String> testPasswordList = new ArrayList<>();
         testPasswordList.add(firstPassword);
@@ -27,5 +30,24 @@ class PasswordManagerTest {
                 passwordManager.getRandomPassword();
             }
         });
+    }
+
+    @Test
+    void shouldReturnNumberOfGuessedLetterInHiddenWord() {
+
+        passwordManager.setCurrentPassword("Ala ma kota");
+        int guessLetter = passwordManager.guessLetter('a');
+
+        Assertions.assertEquals(4, guessLetter);
+    }
+
+    @Test
+    void shouldReturnTrueIfGivenWordIsSameAsHiddenWord() {
+
+        passwordManager.setCurrentPassword("Tajne ukryte haslo");
+        boolean password = passwordManager.guessPassword("tajnE Ukryte haSlo");
+
+        Assertions.assertTrue(password);
+
     }
 }

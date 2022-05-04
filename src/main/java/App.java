@@ -38,15 +38,18 @@ public class App {
                 System.out.println("Tura gracza: " + player);
                 System.out.println("Proszę podać literę lub hasło");
                 String playerAnswer = scanner.nextLine().toLowerCase();
+                char playerAnswerLetter = playerAnswer.charAt(0);
                 if (playerAnswer.length() == 1) {
                     System.out.println("Zgaduję literę");
-                    if (randomPassword.contains(playerAnswer))
-                        System.out.println("Zgadnięta");
+                    if (randomPassword.contains(playerAnswer)) {
+                        int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
+                        System.out.println("Podana litera wystepuje w hasle " + guessLetterNumber + " razy");
+                    }
                     else
                         System.out.println("Taka litera nie występuje w haśle");
                 } else {
                     System.out.println("Zgaduję hasło");
-                    if (randomPassword.equals(playerAnswer))
+                    if (passwordManager.guessPassword(playerAnswer))
                         System.out.println("Hasło odganięte");
                     else
                         System.out.println("Niepoprawne haslo");
