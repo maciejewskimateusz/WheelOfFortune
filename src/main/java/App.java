@@ -30,11 +30,28 @@ public class App {
         } catch (InputMismatchException e) {
             System.out.println("Nie podales liczby calkowitej");
         }
-        scanner.close();
+
         for (int i = 0; i < ROUNDS; i++) {
             System.out.println("Rozpoczęła się runda " + "<" + (i + 1) + ">");
-            System.out.println("Losowe haslo: " + passwordManager.getRandomPassword());
-            playersList.forEach((player) -> System.out.println("Tura gracza: " + player));
+            String randomPassword = passwordManager.getRandomPassword().toLowerCase();
+            for (Player player : playersList) {
+                System.out.println("Tura gracza: " + player);
+                System.out.println("Proszę podać literę lub hasło");
+                String playerAnswer = scanner.nextLine().toLowerCase();
+                if (playerAnswer.length() == 1) {
+                    System.out.println("Zgaduję literę");
+                    if (randomPassword.contains(playerAnswer))
+                        System.out.println("Zgadnięta");
+                    else
+                        System.out.println("Taka litera nie występuje w haśle");
+                } else {
+                    System.out.println("Zgaduję hasło");
+                    if (randomPassword.equals(playerAnswer))
+                        System.out.println("Hasło odganięte");
+                    else
+                        System.out.println("Niepoprawne haslo");
+                }
+            }
         }
     }
 }

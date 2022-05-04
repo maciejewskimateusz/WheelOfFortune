@@ -8,9 +8,7 @@ class PasswordManagerTest {
 
     @Test
     void shouldGeneratedPasswordBeEqualPasswordFromList() {
-        /* nie jestem pewny tego testu czy o to chodzilo w poleceniu historyjki
 
-         */
         PasswordManager passwordManager = new PasswordManager();
         String firstPassword = "Apetyt rośnie w miarę jedzenia";
         List<String> testPasswordList = new ArrayList<>();
@@ -25,10 +23,7 @@ class PasswordManagerTest {
 
         Assertions.assertThrows(IllegalStateException.class, () -> {
             PasswordManager passwordManager = new PasswordManager();
-            /* +1 dlatego aby petla wykonywala sie o jeden raz wiecej niz jest wielkosc listy z haslami.
-            Mozna to jakos lepiej roziwazac?
-             */
-            for (int i = 0; i < passwordManager.getPasswords().size() + 1 ; i++) {
+            for (int i = 0; i <= passwordManager.getPasswords().size(); i++) {
                 passwordManager.getRandomPassword();
             }
         });
