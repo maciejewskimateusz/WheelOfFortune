@@ -40,8 +40,8 @@ public class App {
                 System.out.println(passwordManager.getObscuredPassword());
                 System.out.println("Proszę podać literę lub hasło");
                 String playerAnswer = scanner.nextLine().toLowerCase();
-                char playerAnswerLetter = playerAnswer.charAt(0);
                 if (playerAnswer.length() == 1) {
+                    char playerAnswerLetter = playerAnswer.charAt(0);
                     System.out.println("Zgaduję literę");
                     if (randomPassword.contains(playerAnswer)) {
                         int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);

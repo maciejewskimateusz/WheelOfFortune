@@ -20,11 +20,15 @@ public class PasswordManager {
         }
     }
 
+    void setCorrectGuess(List<Character> correctGuess) {
+        this.correctGuess = correctGuess;
+    }
+
     public List<String> getPasswords() {
         return passwords;
     }
 
-    public void setPasswords(List<String> passwords) {
+    void setPasswords(List<String> passwords) {
         this.passwords = passwords;
         passwordsMap.clear();
 
@@ -38,7 +42,6 @@ public class PasswordManager {
     }
 
     String getRandomPassword() {
-        correctGuess.clear();
         int randomPasswordIndex = random.nextInt(passwords.size());
         String randomPassword = passwords.get(randomPasswordIndex);
 
@@ -47,6 +50,7 @@ public class PasswordManager {
             if (!passwordsMap.get(randomPassword)) {
                 currentPassword = randomPassword;
                 passwordsMap.put(randomPassword, true);
+                correctGuess.clear();
                 return currentPassword;
             } else {
                 // jezeli wylosowane haslo ma juz flage true, losuj nowe haslo
