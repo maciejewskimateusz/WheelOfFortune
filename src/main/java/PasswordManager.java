@@ -5,6 +5,7 @@ public class PasswordManager {
     private Random random = new Random();
     private Map<String, Boolean> passwordsMap = new HashMap<>();
     private String currentPassword;
+    private List<Character> correctGuess = new ArrayList<>();
 
     PasswordManager() {
         passwords.add("Apetyt rośnie w miarę jedzenia");
@@ -13,8 +14,6 @@ public class PasswordManager {
         passwords.add("Darowanemu koniowi w zęby się nie zagląda");
         passwords.add("Diabeł tkwi w szczegółach");
         passwords.add("Elektryka prąd nie tyka");
-        passwords.add("Dodatkowe hasło");
-        passwords.add("Ekstra hasło");
 
         for (int i = 0; i < passwords.size(); i++) {
             passwordsMap.put(passwords.get(i), false);
@@ -25,19 +24,21 @@ public class PasswordManager {
         return passwords;
     }
 
-     void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
-
     public void setPasswords(List<String> passwords) {
         this.passwords = passwords;
         passwordsMap.clear();
+
         for (int i = 0; i < passwords.size(); i++) {
             passwordsMap.put(passwords.get(i), false);
         }
     }
 
+    void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
     String getRandomPassword() {
+        correctGuess.clear();
         int randomPasswordIndex = random.nextInt(passwords.size());
         String randomPassword = passwords.get(randomPasswordIndex);
 
@@ -68,14 +69,32 @@ public class PasswordManager {
         int counter = 0;
 
         for (int i = 0; i < currentPassword.length(); i++) {
-            if (guessWordArrayChar[i] == letter)
+            if (guessWordArrayChar[i] == letter) {
                 counter++;
+                correctGuess.add(letter);
+            }
         }
         return counter;
     }
 
-    public boolean guessPassword(String password){
+    public boolean guessPassword(String password) {
         return currentPassword.equalsIgnoreCase(password);
+    }
+
+    public String getObscuredPassword() {
+        StringBuilder stringBuilder = new StringBuilder(this.currentPassword);
+
+        for (int i = 0; i < currentPassword.length(); i++) {
+            char currentChar = currentPassword.toLowerCase().charAt(i);
+            if (Character.isLetter(currentChar))
+                stringBuilder.replace(i, i + 1, "-");
+
+            for (Character character : correctGuess) {
+                if (currentChar == character)
+                    stringBuilder.replace(i, i + 1, String.valueOf(character));
+            }
+        }
+        return stringBuilder.toString();
     }
 
 }

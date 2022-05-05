@@ -36,6 +36,8 @@ public class App {
             String randomPassword = passwordManager.getRandomPassword().toLowerCase();
             for (Player player : playersList) {
                 System.out.println("Tura gracza: " + player);
+                System.out.println("Ukryte hasło:");
+                System.out.println(passwordManager.getObscuredPassword());
                 System.out.println("Proszę podać literę lub hasło");
                 String playerAnswer = scanner.nextLine().toLowerCase();
                 char playerAnswerLetter = playerAnswer.charAt(0);
@@ -44,8 +46,7 @@ public class App {
                     if (randomPassword.contains(playerAnswer)) {
                         int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
                         System.out.println("Podana litera wystepuje w hasle " + guessLetterNumber + " razy");
-                    }
-                    else
+                    } else
                         System.out.println("Taka litera nie występuje w haśle");
                 } else {
                     System.out.println("Zgaduję hasło");
