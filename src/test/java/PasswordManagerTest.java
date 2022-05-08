@@ -50,4 +50,19 @@ class PasswordManagerTest {
         Assertions.assertTrue(password);
 
     }
+    @Test
+    void shouldUncoverThreeLettersInHiddenPassword() {
+        passwordManager.setCurrentPassword("Ala ma kota");
+        passwordManager.setCorrectGuess(List.of('a', 'l', 'o'));
+
+        Assertions.assertEquals("ala -a -o-a", passwordManager.getObscuredPassword());
+    }
+
+    @Test
+    void shouldReturnFullCoveredPasswordWithGivenWrongLetters() {
+        passwordManager.setCurrentPassword("Ala ma kota");
+        passwordManager.setCorrectGuess(List.of('z', 'w'));
+
+        Assertions.assertEquals("--- -- ----", passwordManager.getObscuredPassword());
+    }
 }
