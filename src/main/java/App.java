@@ -7,11 +7,13 @@ public class App {
     public static final int ROUNDS = 4;
     public static final int MIN_PLAYERS = 2;
     public static final int MAX_PLAYERS = 4;
+    public static PasswordManager passwordManager = new PasswordManager();
+    public static boolean passwordNotGuessed = true;
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Player> playersList = new ArrayList<>();
-        PasswordManager passwordManager = new PasswordManager();
 
         System.out.println("Witaj w Kole Fortuny!");
         System.out.println("Proszę podac ilość graczy");
@@ -32,30 +34,48 @@ public class App {
         }
 
         for (int i = 0; i < ROUNDS; i++) {
+            passwordNotGuessed = true;
             System.out.println("Rozpoczęła się runda " + "<" + (i + 1) + ">");
             String randomPassword = passwordManager.getRandomPassword().toLowerCase();
-            for (Player player : playersList) {
-                System.out.println("Tura gracza: " + player);
-                System.out.println("Ukryte hasło:");
-                System.out.println(passwordManager.getObscuredPassword());
-                System.out.println("Proszę podać literę lub hasło");
-                String playerAnswer = scanner.nextLine().toLowerCase();
-                if (playerAnswer.length() == 1) {
-                    char playerAnswerLetter = playerAnswer.charAt(0);
-                    System.out.println("Zgaduję literę");
-                    if (randomPassword.contains(playerAnswer)) {
-                        int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
-                        System.out.println("Podana litera wystepuje w hasle " + guessLetterNumber + " razy");
-                    } else
-                        System.out.println("Taka litera nie występuje w haśle");
-                } else {
-                    System.out.println("Zgaduję hasło");
-                    if (passwordManager.guessPassword(playerAnswer))
-                        System.out.println("Hasło odganięte");
-                    else
-                        System.out.println("Niepoprawne haslo");
+            while (passwordNotGuessed) {
+                for (Player player : playersList) {
+                    System.out.println("Tura gracza: " + player);
+                    System.out.println("Ukryte hasło:");
+                    System.out.println(passwordManager.getObscuredPassword());
+                    System.out.println("Proszę podać literę lub hasło");
+                    String playerAnswer = scanner.nextLine().toLowerCase();
+                    if (playerAnswer.length() == 1) {
+                        guessLetter(randomPassword, playerAnswer);
+                    } else {
+                        guessPassword(playerAnswer);
+                    }
+                    if (!passwordNotGuessed)
+                        break;
+                    if (passwordManager.checkPassword()){
+                        passwordNotGuessed = false;
+                        System.out.println("Hasło odgadnięte");
+                    }
                 }
             }
         }
+    }
+
+    private static void guessPassword(String playerAnswer) {
+        System.out.println("Zgaduję hasło");
+        if (passwordManager.guessPassword(playerAnswer)) {
+            System.out.println("Hasło odganięte");
+            passwordNotGuessed = false;
+        } else
+            System.out.println("Niepoprawne haslo");
+    }
+
+    private static void guessLetter(String randomPassword, String playerAnswer) {
+        char playerAnswerLetter = playerAnswer.charAt(0);
+        System.out.println("Zgaduję literę");
+        if (randomPassword.contains(playerAnswer)) {
+            int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
+            System.out.println("Podana litera wystepuje w hasle " + guessLetterNumber + " razy");
+        } else
+            System.out.println("Taka litera nie występuje w haśle");
     }
 }

@@ -101,4 +101,8 @@ public class PasswordManager {
         return stringBuilder.toString();
     }
 
+    public boolean checkPassword(){
+        return getObscuredPassword().equalsIgnoreCase(currentPassword);
+    }
+
 }
