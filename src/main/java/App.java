@@ -9,6 +9,7 @@ public class App {
     public static final int MAX_PLAYERS = 4;
     public static PasswordManager passwordManager = new PasswordManager();
     public static boolean passwordNotGuessed = true;
+    public static final int POINTS_PER_GUESS = 10;
 
 
     public static void main(String[] args) {
@@ -49,9 +50,10 @@ public class App {
                     } else {
                         guessPassword(playerAnswer);
                     }
-                    if (!passwordNotGuessed)
+                    if (!passwordNotGuessed) {
                         break;
-                    if (passwordManager.checkPassword()){
+                    }
+                    if (passwordManager.checkPassword()) {
                         passwordNotGuessed = false;
                         System.out.println("Hasło odgadnięte");
                     }
