@@ -45,9 +45,9 @@ public class App {
                     System.out.println("Proszę podać literę lub hasło");
                     String playerAnswer = scanner.nextLine().toLowerCase();
                     if (playerAnswer.length() == 1) {
-                        guessLetter(randomPassword, playerAnswer);
+                        guessLetter(randomPassword, playerAnswer, player);
                     } else {
-                        guessPassword(playerAnswer);
+                        guessPassword(playerAnswer, player);
                     }
                     if (!passwordNotGuessed) {
                         break;
@@ -61,7 +61,7 @@ public class App {
         }
     }
 
-    private static void guessPassword(String playerAnswer) {
+    private static void guessPassword(String playerAnswer, Player player) {
         System.out.println("Zgaduję hasło");
         if (passwordManager.guessPassword(playerAnswer)) {
             System.out.println("Hasło odganięte");
@@ -69,12 +69,14 @@ public class App {
             int numberOfGuessedLetters = passwordWithNoSpaces.length() - passwordManager.getCorrectGuess().size();
             int pointsForPlayer = POINTS_PER_GUESS * numberOfGuessedLetters;
             System.out.printf("Brawo zdobywasz %d punktów \n", pointsForPlayer);
+            player.addPoints(pointsForPlayer);
             passwordNotGuessed = false;
-        } else
+        } else {
             System.out.println("Niepoprawne haslo");
+        }
     }
 
-    private static void guessLetter(String randomPassword, String playerAnswer) {
+    private static void guessLetter(String randomPassword, String playerAnswer, Player player) {
         char playerAnswerLetter = playerAnswer.charAt(0);
         System.out.println("Zgaduję literę");
         if (randomPassword.contains(playerAnswer)) {
@@ -82,6 +84,7 @@ public class App {
                 int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
                 int pointsForPlayer = guessLetterNumber * POINTS_PER_GUESS;
                 System.out.printf("Brawo zdobywasz %d punktów \n", pointsForPlayer);
+                player.addPoints(pointsForPlayer);
             } else {
                 System.out.println("Taka litera została już podana");
             }
