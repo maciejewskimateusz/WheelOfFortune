@@ -7,10 +7,9 @@ public class App {
     public static final int ROUNDS = 4;
     public static final int MIN_PLAYERS = 2;
     public static final int MAX_PLAYERS = 4;
+    public static final int POINTS_PER_GUESS = 10;
     public static PasswordManager passwordManager = new PasswordManager();
     public static boolean passwordNotGuessed = true;
-    public static final int POINTS_PER_GUESS = 10;
-
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +65,10 @@ public class App {
         System.out.println("Zgaduję hasło");
         if (passwordManager.guessPassword(playerAnswer)) {
             System.out.println("Hasło odganięte");
+            String passwordWithNoSpaces = passwordManager.getObscuredPassword().replaceAll("\\s", "");
+            int numberOfGuessedLetters = passwordWithNoSpaces.length() - passwordManager.getCorrectGuess().size();
+            int pointsForPlayer = POINTS_PER_GUESS * numberOfGuessedLetters;
+            System.out.printf("Brawo zdobywasz %d punktów \n", pointsForPlayer);
             passwordNotGuessed = false;
         } else
             System.out.println("Niepoprawne haslo");
@@ -75,8 +78,13 @@ public class App {
         char playerAnswerLetter = playerAnswer.charAt(0);
         System.out.println("Zgaduję literę");
         if (randomPassword.contains(playerAnswer)) {
-            int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
-            System.out.println("Podana litera wystepuje w hasle " + guessLetterNumber + " razy");
+            if (!passwordManager.getCorrectGuess().contains(playerAnswerLetter)) {
+                int guessLetterNumber = passwordManager.guessLetter(playerAnswerLetter);
+                int pointsForPlayer = guessLetterNumber * POINTS_PER_GUESS;
+                System.out.printf("Brawo zdobywasz %d punktów \n", pointsForPlayer);
+            } else {
+                System.out.println("Taka litera została już podana");
+            }
         } else
             System.out.println("Taka litera nie występuje w haśle");
     }
