@@ -2,6 +2,7 @@ import java.util.Objects;
 
 public class Player {
     private String name;
+    private int points;
 
     public Player(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -9,6 +10,11 @@ public class Player {
         } else {
             this.name = name;
         }
+        this.points = 0;
+    }
+
+    public void addPoints(int points){
+        this.points += points;
     }
 
     @Override

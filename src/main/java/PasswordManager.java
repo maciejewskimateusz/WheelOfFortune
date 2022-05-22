@@ -20,6 +20,10 @@ public class PasswordManager {
         }
     }
 
+    public List<Character> getCorrectGuess() {
+        return correctGuess;
+    }
+
     void setCorrectGuess(List<Character> correctGuess) {
         this.correctGuess = correctGuess;
     }
@@ -101,7 +105,7 @@ public class PasswordManager {
         return stringBuilder.toString();
     }
 
-    public boolean checkPassword(){
+    public boolean checkPassword() {
         return getObscuredPassword().equalsIgnoreCase(currentPassword);
     }
 
