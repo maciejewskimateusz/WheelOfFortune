@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
     public static final int ROUNDS = 4;
@@ -58,6 +55,16 @@ public class App {
                     }
                 }
             }
+        }
+        printScore(playersList);
+    }
+
+    private static void printScore(final List<Player> playersList) {
+        System.out.println("*Koniec gry*");
+        System.out.println("*Tabela wyników*");
+        Collections.sort(playersList);
+        for (Player player : playersList) {
+            System.out.printf("%s --- liczba punktów: %d \n", player, player.getPoints());
         }
     }
 

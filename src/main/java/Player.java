@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Player {
+public class Player implements Comparable<Player>{
     private String name;
     private int points;
 
@@ -11,6 +11,10 @@ public class Player {
             this.name = name;
         }
         this.points = 0;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     public void addPoints(int points){
@@ -33,5 +37,14 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(Player p) {
+        if (this.points > p.points)
+            return -1;
+        else if (this.points < p.points)
+            return 1;
+        return 0;
     }
 }
