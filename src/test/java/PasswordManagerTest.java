@@ -77,12 +77,6 @@ class PasswordManagerTest {
     @Test
     void shouldReturnFalseIfAllCorrectLettersAreNotGiven() {
         passwordManager.setCurrentPassword("Ala ma kota");
-        /*
-        nie wiem czemu jak wstawiam ponizej do listy wielkie litery to testy nie przechodza,
-        a podczas normalnej gry gdy podaje wielkie litery to sa one automatycznie zamieniena na male i wszystko jest ok.
-        Zerkniesz gdzie jest problem?
-        Metoda checkPassword ignoruje wielkosc liter.
-         */
         List<Character> characters = Arrays.asList('z', 'a', 'q', 'j', 'e', 't');
         passwordManager.setCorrectGuess(characters);
 
